@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Dimension Measurement</title>
+</head>
+<body>
+    <h1>Object Dimension Measurement, Integral Image and Image Stitching</h1>
+    <form id="measurement-form" enctype="multipart/form-data" action="/measure" method="post">
+        <input type="file" name="image" accept="image/*" required>
+        <input type="number" name="known_dimensions" placeholder="Enter known dimensions (e.g., 7)" required>
+        <button type="submit">Measure</button>
+    </form>
+    <form id="integral-form" enctype="multipart/form-data" action="/integral_image" method="post">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Compute Integral Image</button>
+    </form>
+    <form id="stitching-form" enctype="multipart/form-data" action="/image_stitch" method="post">
+        <input type="file" name="image1" accept="image/*" required>
+        <input type="file" name="image2" accept="image/*" required>
+        <button type="submit">Perform Image Stitching</button>
+    </form>
+    <div id="result">
+        {% if dimensions %}
+            <p>Estimated real-world dimensions: {{ dimensions }} cm</p>
+        {% elif result %}
+            <img src="data:image/jpeg;base64,{{ result }}" alt="Result">
+        {% endif %}
+    </div>
+    <div id="integral_image">
+        {% if integral_image %}
+            <img src="data:image/jpeg;base64,{{ integral_image }}" alt="Integral Image">
+        {% endif %}
+    </div> 
+    <div id="stitched_image">
+        {% if stitched_image %}
+            <img src="data:image/jpeg;base64,{{ stitched_image }}" alt="Sticthed Image">
+        {% endif %}
+    </div>      
+</body>
+</html>
